@@ -4,8 +4,25 @@ import {withRouter} from 'react-router-dom';
 import Page from './page';
 
 class Results extends Component {
+    state = {
+        data: []
+    }
+
+    async componentDidMount(){
+        await this.fetchResults()
+    }
+
+    fetchResults = async () => {
+        let res = await fetch('https://pokeapi.co/api/v2/pokemon/')
+        let data = await res.json()
+
+        this.setState({
+            data
+        })
+    }
 
     render() {
+        console.log(this.state.data);
         const {results} = this.props;
         return(
             <Page 
@@ -19,7 +36,7 @@ class Results extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        results:state.results
+        results:state.results,
     };
 };
 
